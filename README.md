@@ -84,7 +84,29 @@ uvicorn src.credentialwatch_backend.app_alert:app --reload --port 8003
 
 ### Deploying to Modal
 
-To deploy the services to Modal, you will typically define a Modal entry point (not currently included in this repo) that wraps these FastAPI apps.
+To deploy the backend to Modal:
+
+1.  **Initialize the Database on Modal Volume**:
+    ```bash
+    modal run src.credentialwatch_backend.modal_app::init_db
+    ```
+
+2.  **Serve the App (Dev Mode)**:
+    ```bash
+    modal serve src.credentialwatch_backend.modal_app
+    ```
+
+3.  **Deploy to Production**:
+    ```bash
+    modal deploy src.credentialwatch_backend.modal_app
+    ```
+
+The API will be available at the URL provided by Modal (e.g., `https://your-username--credentialwatch-backend-fastapi-app.modal.run`).
+
+The endpoints are mounted as follows:
+-   `/cred`: Credential Management API
+-   `/npi`: NPI Registry Proxy API
+-   `/alert`: Alert Management API
 
 ## 🗄️ Database Schema
 
